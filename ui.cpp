@@ -1,6 +1,7 @@
 #include "ui.hpp"
 #include <atomic>
 #include <chrono>
+#include <cstdlib>
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/screen_interactive.hpp>
 #include <ftxui/dom/elements.hpp>
@@ -18,7 +19,7 @@ void iniciar_interfaz_pomodoro(int work_mins, int rest_mins, int total_cycles) {
     atomic<bool> es_descanso{false};
     atomic<bool> ejecutando{true};
 
-    // --- HILO DE LÓGICA (Tu antiguo countdown) ---
+    // --- HILO DE LÓGICA  ---
     thread timer_thread([&]() {
         while (ejecutando && ciclo_actual <= total_cycles) {
             this_thread::sleep_for(chrono::seconds(1));
@@ -28,15 +29,35 @@ void iniciar_interfaz_pomodoro(int work_mins, int rest_mins, int total_cycles) {
             } else {
                 // Cambio de estado: Trabajo <-> Descanso
                 if (!es_descanso) {
+
+                    // sonido cuando "termine de trabajar"
+                    system(
+                        "pw-play "
+                        "/usr/share/sounds/freedesktop/stereo/complete.oga &");
+
+                    // notificacion Visual en sistema
+                    system("notify-send 'PomoCli' 'Tiempo terminado! A "
+                           "descansar, ' -i clock&");
+
                     es_descanso = true;
                     segundos_restantes = rest_mins * 60;
                 } else {
+
+                    // sonido de "se acabo el Descanso"
+                    system(
+                        "pw-play"
+                        "/usr/share/sounds/freedesktop/stereo/complete.oga &");
+
+                    // notificacion visual
+                    system("notify-send 'PomoCli' 'Descanso termindo!' -i "
+                           "terminal &");
+
                     es_descanso = false;
                     ciclo_actual++;
                     segundos_restantes = work_mins * 60;
                 }
             }
-            // Le pedimos a FTXUI que refresque la pantalla
+            // FTXUI que refresque la pantalla
             screen.PostEvent(Event::Custom);
         }
     });
