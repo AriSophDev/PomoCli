@@ -49,8 +49,8 @@ void iniciar_interfaz_pomodoro(int work_mins, int rest_mins, int total_cycles) {
                         "/usr/share/sounds/freedesktop/stereo/complete.oga &");
 
                     // notificacion visual
-                    system("notify-send 'PomoCli' 'Descanso termindo!' -i "
-                           "terminal &");
+                    system("notify-send 'PomoCli' 'Tiempo terminado! A "
+                           "Trabajar, ' -i clock&");
 
                     es_descanso = false;
                     ciclo_actual++;
