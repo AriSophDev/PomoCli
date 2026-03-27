@@ -25,6 +25,8 @@ Asegúrate de tener instaladas las dependencias base para compilar y ejecutar la
 
 ```bash
 sudo pacman -S cmake base-devel alsa-utils libnotify
+```
+
 
 
 ## 🗺️ Roadmap de Desarrollo
