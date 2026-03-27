@@ -25,3 +25,23 @@ Asegúrate de tener instaladas las dependencias base para compilar y ejecutar la
 
 ```bash
 sudo pacman -S cmake base-devel alsa-utils libnotify
+
+
+## 🗺️ Roadmap de Desarrollo
+
+### 🟢 Fase 1: Core & Estabilidad (Completado)
+- [x] **Motor TUI:** Interfaz reactiva con `FTXUI`.
+- [x] **Lógica de Hilos:** Temporizador asíncrono en C++ (evita bloqueos de UI).
+- [x] **Gestión de CMake:** Configuración con `FetchContent` para dependencias automáticas.
+
+
+### 🟡 Fase 2: Experiencia de Usuario & Datos (En Progreso)
+- [x] **Persistencia JSON:** Guardado automático de sesiones en `stats.json` (`nlohmann/json`).
+- [x] **Controles de Teclado:** Soporte para `Espacio` (Pausa), `S` (Skip) y `Q` (Salir).
+- [x] **Temas Dinámicos:** Cambios de color (Rojo/Verde/Azul) según el estado del timer.
+- [x] **Argumentos de Usuario:** Soporte para tiempos personalizados (e.g., `./pomodoro 25 5`).
+
+### 🔵 Fase 3: Portabilidad & Distribución (Próximamente)
+- [ ] **Soporte Fedora:** Crear un archivo `.spec` o instrucciones para `dnf` y asegurar compatibilidad con `Pipewire`.
+- [ ] **Soporte macOS:** Adaptar las llamadas de sistema de audio a `afplay` (nativo de Mac) y soporte para `brew`.
+- [ ] **Binary Release:** Scripts de instalación automatizada (`install.sh`) para diferentes distros.
