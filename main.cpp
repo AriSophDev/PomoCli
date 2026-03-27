@@ -1,8 +1,8 @@
 #include "ui.hpp"
 
 int main() {
-    int work = 25;
-    int rest = 5;
+    int work = 1;
+    int rest = 1;
     int cycles = 4;
 
     // Llamamos a la interfaz que creamos en ui.cpp

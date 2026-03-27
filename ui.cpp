@@ -1,4 +1,5 @@
 #include "ui.hpp"
+#include "storage.hpp"
 #include <atomic>
 #include <chrono>
 #include <cstdlib>
@@ -6,7 +7,6 @@
 #include <ftxui/component/screen_interactive.hpp>
 #include <ftxui/dom/elements.hpp>
 #include <thread>
-#include "storage.hpp"
 
 using namespace ftxui;
 using namespace std;
@@ -45,8 +45,9 @@ void iniciar_interfaz_pomodoro(int work_mins, int rest_mins, int total_cycles) {
                 } else {
 
                     // sonido de "se acabo el Descanso"
+
                     system(
-                        "pw-play"
+                        "pw-play "
                         "/usr/share/sounds/freedesktop/stereo/complete.oga &");
 
                     // notificacion visual
@@ -103,7 +104,4 @@ void iniciar_interfaz_pomodoro(int work_mins, int rest_mins, int total_cycles) {
     screen.Loop(component);
     if (timer_thread.joinable())
         timer_thread.join();
-    
-    
-    
 }

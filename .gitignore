@@ -1,1 +1,7 @@
 pomodoro
+/build
+/build
+build/_deps/ftxui-build/CMakeFiles/component.dir/compiler_depend.make
+build/_deps/ftxui-build/CMakeFiles/dom.dir/compiler_depend.make
+*.json
+build/_deps/ftxui-build/CMakeFiles/dom.dir/compiler_depend.make
