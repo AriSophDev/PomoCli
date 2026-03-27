@@ -39,9 +39,9 @@ sudo pacman -S cmake base-devel alsa-utils libnotify
 
 ### 🟡 Fase 2: Experiencia de Usuario & Datos (En Progreso)
 - [x] **Persistencia JSON:** Guardado automático de sesiones en `stats.json` (`nlohmann/json`).
-- [x] **Controles de Teclado:** Soporte para `Espacio` (Pausa), `S` (Skip) y `Q` (Salir).
-- [x] **Temas Dinámicos:** Cambios de color (Rojo/Verde/Azul) según el estado del timer.
-- [x] **Argumentos de Usuario:** Soporte para tiempos personalizados (e.g., `./pomodoro 25 5`).
+- [] **Controles de Teclado:** Soporte para `Espacio` (Pausa), `S` (Skip) y `Q` (Salir).
+- [] **Temas Dinámicos:** Cambios de color (Rojo/Verde/Azul) según el estado del timer.
+- [] **Argumentos de Usuario:** Soporte para tiempos personalizados (e.g., `./pomodoro 25 5`).
 
 ### 🔵 Fase 3: Portabilidad & Distribución (Próximamente)
 - [ ] **Soporte Fedora:** Crear un archivo `.spec` o instrucciones para `dnf` y asegurar compatibilidad con `Pipewire`.
