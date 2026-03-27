@@ -1,8 +1,13 @@
+#ifndef STORAGE_HPP
+#define STORAGE_HPP
+
+#include <ctime>
 #include <fstream>
 #include <nlohmann/json.hpp>
 #include <string>
 #include <vector>
 
+using namespace std;
 using json = nlohmann::json;
 
 struct Session {
@@ -11,26 +16,41 @@ struct Session {
     int completed_cycles;
 };
 
-// Para que la librería sepa cómo convertir tu struct a JSON automáticamente
-void to_json(json &j, const Session &s) {
-    j = json{{"date", s.date},
-             {"work_mins", s.work_minutes},
-             {"cycles", s.completed_cycles}};
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Session, date, work_minutes,
+                                   completed_cycles)
+
+namespace Storage {
+
+inline string get_current_date() {
+    time_t now = time(0);
+    char mbstr[11];
+    if (strftime(mbstr, sizeof(mbstr), "%Y-%m-%d", localtime(&now))) {
+        return string(mbstr);
+    }
+    return "unknown";
 }
 
-void guardar_sesion(const Session &s) {
-    json j_list;
-    std::ifstream file("stats.json");
+inline void save_session(const Session &session) {
+    string filename = "sessions.json";
+    json j_list = json::array();
 
-    // Si el archivo ya existe, leemos lo anterior
-    if (file.is_open()) {
-        file >> j_list;
-        file.close();
+    ifstream file_in(filename);
+    if (file_in.is_open()) {
+        try {
+            file_in >> j_list;
+        } catch (...) {
+            j_list = json::array();
+        }
+        file_in.close();
     }
 
-    j_list.push_back(s);
+    Session nueva = {get_current_date(), session.work_minutes,
+                     session.completed_cycles};
+    j_list.push_back(nueva);
 
-    std::ofstream out("stats.json");
-    out << j_list.dump(
-        4); // El 4 es para que el JSON sea legible (pretty print)
+    ofstream file_out(filename);
+    file_out << j_list.dump(4);
 }
+}
+
+#endif

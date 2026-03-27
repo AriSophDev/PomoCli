@@ -6,6 +6,7 @@
 #include <ftxui/component/screen_interactive.hpp>
 #include <ftxui/dom/elements.hpp>
 #include <thread>
+#include "storage.hpp"
 
 using namespace ftxui;
 using namespace std;
@@ -50,7 +51,7 @@ void iniciar_interfaz_pomodoro(int work_mins, int rest_mins, int total_cycles) {
 
                     // notificacion visual
                     system("notify-send 'PomoCli' 'Tiempo terminado! A "
-                           "Trabajar, ' -i clock&");
+                           "descansar, ' -i clock&");
 
                     es_descanso = false;
                     ciclo_actual++;
@@ -102,4 +103,7 @@ void iniciar_interfaz_pomodoro(int work_mins, int rest_mins, int total_cycles) {
     screen.Loop(component);
     if (timer_thread.joinable())
         timer_thread.join();
+    
+    
+    
 }
