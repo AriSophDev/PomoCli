@@ -5,9 +5,7 @@
 #include <fstream>
 #include <nlohmann/json.hpp>
 #include <string>
-#include <vector>
 
-using namespace std;
 using json = nlohmann::json;
 
 struct Session {
@@ -16,25 +14,27 @@ struct Session {
     int completed_cycles;
 };
 
+// Macro para serializar el struct
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Session, date, work_minutes,
                                    completed_cycles)
 
 namespace Storage {
-
-inline string get_current_date() {
-    time_t now = time(0);
+// Función para obtener la fecha
+static std::string get_current_date() {
+    std::time_t t = std::time(nullptr);
     char mbstr[11];
-    if (strftime(mbstr, sizeof(mbstr), "%Y-%m-%d", localtime(&now))) {
-        return string(mbstr);
+    if (std::strftime(mbstr, sizeof(mbstr), "%Y-%m-%d", std::localtime(&t))) {
+        return {mbstr};
     }
     return "unknown";
 }
 
-inline void save_session(const Session &session) {
-    string filename = "sessions.json";
+// Cambiamos a static para evitar problemas de enlace múltiple
+static void guardar_progreso(int work, int cycles) {
+    std::string filename = "stats.json";
     json j_list = json::array();
 
-    ifstream file_in(filename);
+    std::ifstream file_in(filename);
     if (file_in.is_open()) {
         try {
             file_in >> j_list;
@@ -44,13 +44,12 @@ inline void save_session(const Session &session) {
         file_in.close();
     }
 
-    Session nueva = {get_current_date(), session.work_minutes,
-                     session.completed_cycles};
+    Session nueva = {get_current_date(), work, cycles};
     j_list.push_back(nueva);
 
-    ofstream file_out(filename);
+    std::ofstream file_out(filename);
     file_out << j_list.dump(4);
 }
-}
+} // namespace Storage
 
 #endif

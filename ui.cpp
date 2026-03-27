@@ -15,6 +15,7 @@ void iniciar_interfaz_pomodoro(int work_mins, int rest_mins, int total_cycles) {
     auto screen = ScreenInteractive::TerminalOutput();
 
     // Variables atómicas para que el hilo del timer y la UI se comuniquen
+    atomic<bool> pausado{false};
     atomic<int> ciclo_actual{1};
     atomic<int> segundos_restantes{work_mins * 60};
     atomic<bool> es_descanso{false};
@@ -24,44 +25,51 @@ void iniciar_interfaz_pomodoro(int work_mins, int rest_mins, int total_cycles) {
     thread timer_thread([&]() {
         while (ejecutando && ciclo_actual <= total_cycles) {
             this_thread::sleep_for(chrono::seconds(1));
+            if (!pausado) {
+                this_thread::sleep_for(chrono::seconds(1));
 
-            if (segundos_restantes > 0) {
-                segundos_restantes--;
-            } else {
-                // Cambio de estado: Trabajo <-> Descanso
-                if (!es_descanso) {
-
-                    // sonido cuando "termine de trabajar"
-                    system(
-                        "pw-play "
-                        "/usr/share/sounds/freedesktop/stereo/complete.oga &");
-
-                    // notificacion Visual en sistema
-                    system("notify-send 'PomoCli' 'Tiempo terminado! A "
-                           "descansar, ' -i clock&");
-
-                    es_descanso = true;
-                    segundos_restantes = rest_mins * 60;
+                if (segundos_restantes > 0) {
+                    segundos_restantes--;
                 } else {
+                    // Cambio de estado: Trabajo <-> Descanso
+                    if (!es_descanso) {
 
-                    // sonido de "se acabo el Descanso"
+                        // sonido cuando "termine de trabajar"
+                        system("pw-play "
+                               "/usr/share/sounds/freedesktop/stereo/"
+                               "complete.oga &");
 
-                    system(
-                        "pw-play "
-                        "/usr/share/sounds/freedesktop/stereo/complete.oga &");
+                        // notificacion Visual en sistema
+                        system("notify-send 'PomoCli' 'Tiempo terminado! A "
+                               "descansar, ' -i clock&");
 
-                    // notificacion visual
-                    system("notify-send 'PomoCli' 'Tiempo terminado! A "
-                           "descansar, ' -i clock&");
+                        es_descanso = true;
+                        segundos_restantes = rest_mins * 60;
+                    } else {
 
-                    es_descanso = false;
-                    ciclo_actual++;
-                    segundos_restantes = work_mins * 60;
+                        // sonido de "se acabo el Descanso"
+
+                        system("pw-play "
+                               "/usr/share/sounds/freedesktop/stereo/"
+                               "complete.oga &");
+
+                        // notificacion visual
+                        system("notify-send 'PomoCli' 'Tiempo terminado! A "
+                               "descansar, ' -i clock&");
+
+                        es_descanso = false;
+                        ciclo_actual++;
+                        segundos_restantes = work_mins * 60;
+                    }
                 }
+                // FTXUI que refresque la pantalla
+            } else {
+                this_thread::sleep_for(chrono::milliseconds(100));
             }
-            // FTXUI que refresque la pantalla
             screen.PostEvent(Event::Custom);
         }
+
+        Storage::guardar_progreso(work_mins, total_cycles);
     });
 
     // --- RENDERIZADO (UI) ---
@@ -73,6 +81,9 @@ void iniciar_interfaz_pomodoro(int work_mins, int rest_mins, int total_cycles) {
 
         string tiempo = to_string(m) + ":" + (s < 10 ? "0" : "") + to_string(s);
         string titulo = es_descanso ? " ☕ DESCANSO " : " 💻 TRABAJO ";
+        if (pausado)
+            titulo = " (PAUSADO)";
+
         auto color_tema = es_descanso ? Color::Green : Color::Red;
 
         return vbox(
@@ -88,7 +99,7 @@ void iniciar_interfaz_pomodoro(int work_mins, int rest_mins, int total_cycles) {
                  gauge(ratio) | color(color_tema),
              }) | flex |
                  border,
-             text(" [ESC] Salir ") | dim | center});
+             text(" [Space] Pausa [S] Skip [ESC] Salir ") | dim | center});
     });
 
     // Captura de eventos para cerrar
