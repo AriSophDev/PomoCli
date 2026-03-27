@@ -99,16 +99,29 @@ void iniciar_interfaz_pomodoro(int work_mins, int rest_mins, int total_cycles) {
                  gauge(ratio) | color(color_tema),
              }) | flex |
                  border,
-             text(" [Space] Pausa [S] Skip [ESC] Salir ") | dim | center});
+             text(" [Space] Pausa [S] Skip [Q] Salir ") | dim | center});
     });
 
     // Captura de eventos para cerrar
     auto component = CatchEvent(renderer, [&](Event event) {
-        if (event == Event::Escape) {
-            ejecutando = false;
-            screen.Exit();
+        if (event == Event::Character('S') || event == Event::Character('s')) {
+            segundos_restantes = 0; // Forzar cambio de estado
             return true;
         }
+
+        if (event == Event::Character(' ')) {
+            pausado = !pausado; // Toggle pausa
+            return true;
+        }
+
+        if (event == Event::Character('q') || event == Event::Character('Q')) {
+            ejecutando = false;
+            if (timer_thread.joinable())
+                timer_thread.detach(); // Evitar bloqueo al salir
+            screen.ExitLoopClosure()();
+            return true;
+        }
+
         return false;
     });
 
