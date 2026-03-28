@@ -26,7 +26,14 @@ Asegúrate de tener instaladas las dependencias base para compilar y ejecutar la
 ```bash
 sudo pacman -S cmake base-devel alsa-utils libnotify
 ```
+## Instalacion 
 
+```bash
+git clone https://github.com/AriSophDev/PomoCli.git
+```
+```bash
+./install.sh
+```
 
 
 ## 🗺️ Roadmap de Desarrollo
