@@ -19,8 +19,8 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Session, date, work_minutes,
                                    completed_cycles)
 
 namespace Storage {
-// Función para obtener la fecha
-static std::string get_current_date() {
+// Cambiamos a inline para evitar problemas de enlace múltiple y seguir el estándar C++
+inline std::string get_current_date() {
     std::time_t t = std::time(nullptr);
     char mbstr[11];
     if (std::strftime(mbstr, sizeof(mbstr), "%Y-%m-%d", std::localtime(&t))) {
@@ -29,8 +29,7 @@ static std::string get_current_date() {
     return "unknown";
 }
 
-// Cambiamos a static para evitar problemas de enlace múltiple
-static void guardar_progreso(int work, int cycles) {
+inline void guardar_progreso(int work, int cycles) {
     std::string filename = "stats.json";
     json j_list = json::array();
 

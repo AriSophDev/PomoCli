@@ -13,8 +13,12 @@ FetchContent_Declare(ftxui
   GIT_TAG v5.0.0  # Versión estable
 )
 
-# Esto descarga y configura la librería en la carpeta 'build'
-FetchContent_MakeAvailable(ftxui)
+FetchContent_Declare(json
+  URL https://github.com/nlohmann/json/releases/download/v3.11.3/json.tar.xz
+)
+
+# Esto descarga y configura las librerías en la carpeta 'build'
+FetchContent_MakeAvailable(ftxui json)
 
 # 3. Definición del Ejecutable
 # IMPORTANTE: Aquí debes listar todos tus archivos .cpp
@@ -26,12 +30,13 @@ add_executable(pomodoro
 )
 
 # 4. Enlace de Librerías
-# Esto le dice al compilador dónde encontrar las funciones de FTXUI
-# y añade el soporte para hilos (Threads) que necesita tu timer.
+# Esto le dice al compilador dónde encontrar las funciones de FTXUI,
+# JSON y añade el soporte para hilos (Threads) que necesita tu timer.
 target_link_libraries(pomodoro PRIVATE 
     ftxui::screen 
     ftxui::dom 
     ftxui::component
+    nlohmann_json::nlohmann_json
     Threads::Threads
 )
 

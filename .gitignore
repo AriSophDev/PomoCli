@@ -1,13 +1,22 @@
+# Binarios y carpetas de compilación
 pomodoro
-/build
-/build
-build/_deps/ftxui-build/CMakeFiles/component.dir/compiler_depend.make
-build/_deps/ftxui-build/CMakeFiles/dom.dir/compiler_depend.make
-*.json
-build/_deps/ftxui-build/CMakeFiles/dom.dir/compiler_depend.make
-build/.cmake/api/v1/reply/index-2026-03-27T03-54-43-0395.json
-build/_deps/ftxui-build/CMakeFiles/component.dir/compiler_depend.make
-/build/_deps/ftxui-build/CMakeFiles/dom.dir
-/build/_deps
-/build
-build/.cmake/api/v1/query/client-vscode/query.json
+build/
+bin/
+
+# Archivos de estadísticas y datos locales
+stats.json
+
+# Archivos de configuración de IDEs (VS Code, CLion, etc.)
+.vscode/
+.idea/
+*.swp
+*.patch
+.cache/
+
+# Otros archivos temporales de CMake
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+cmake_install.cmake
+Makefile
+install_manifest.txt
