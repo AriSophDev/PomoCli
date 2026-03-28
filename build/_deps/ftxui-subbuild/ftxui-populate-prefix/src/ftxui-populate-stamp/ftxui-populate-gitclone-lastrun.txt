@@ -3,9 +3,9 @@
 # No other meaning or use of this file is supported.
 
 method=git
-command=/usr/bin/cmake;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;/home/topi/Documentos/work/cliapps/build/_deps/ftxui-subbuild/ftxui-populate-prefix/tmp/ftxui-populate-gitclone.cmake
-source_dir=/home/topi/Documentos/work/cliapps/build/_deps/ftxui-src
-work_dir=/home/topi/Documentos/work/cliapps/build/_deps
+command=/usr/bin/cmake;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;/home/topi/Documentos/work/PomoCli/build/_deps/ftxui-subbuild/ftxui-populate-prefix/tmp/ftxui-populate-gitclone.cmake
+source_dir=/home/topi/Documentos/work/PomoCli/build/_deps/ftxui-src
+work_dir=/home/topi/Documentos/work/PomoCli/build/_deps
 repository=https://github.com/ArthurSonzogni/ftxui
 remote=origin
 init_submodules=TRUE

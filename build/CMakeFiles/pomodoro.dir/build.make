@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/topi/Documentos/work/cliapps
+CMAKE_SOURCE_DIR = /home/topi/Documentos/work/PomoCli
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/topi/Documentos/work/cliapps/build
+CMAKE_BINARY_DIR = /home/topi/Documentos/work/PomoCli/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/pomodoro.dir/depend.make
@@ -72,44 +72,44 @@ include CMakeFiles/pomodoro.dir/flags.make
 CMakeFiles/pomodoro.dir/codegen:
 .PHONY : CMakeFiles/pomodoro.dir/codegen
 
-CMakeFiles/pomodoro.dir/main.cpp.o: CMakeFiles/pomodoro.dir/flags.make
-CMakeFiles/pomodoro.dir/main.cpp.o: /home/topi/Documentos/work/cliapps/main.cpp
-CMakeFiles/pomodoro.dir/main.cpp.o: CMakeFiles/pomodoro.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/topi/Documentos/work/cliapps/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/pomodoro.dir/main.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pomodoro.dir/main.cpp.o -MF CMakeFiles/pomodoro.dir/main.cpp.o.d -o CMakeFiles/pomodoro.dir/main.cpp.o -c /home/topi/Documentos/work/cliapps/main.cpp
+CMakeFiles/pomodoro.dir/src/main.cpp.o: CMakeFiles/pomodoro.dir/flags.make
+CMakeFiles/pomodoro.dir/src/main.cpp.o: /home/topi/Documentos/work/PomoCli/src/main.cpp
+CMakeFiles/pomodoro.dir/src/main.cpp.o: CMakeFiles/pomodoro.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/topi/Documentos/work/PomoCli/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/pomodoro.dir/src/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pomodoro.dir/src/main.cpp.o -MF CMakeFiles/pomodoro.dir/src/main.cpp.o.d -o CMakeFiles/pomodoro.dir/src/main.cpp.o -c /home/topi/Documentos/work/PomoCli/src/main.cpp
 
-CMakeFiles/pomodoro.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/pomodoro.dir/main.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/topi/Documentos/work/cliapps/main.cpp > CMakeFiles/pomodoro.dir/main.cpp.i
+CMakeFiles/pomodoro.dir/src/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/pomodoro.dir/src/main.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/topi/Documentos/work/PomoCli/src/main.cpp > CMakeFiles/pomodoro.dir/src/main.cpp.i
 
-CMakeFiles/pomodoro.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/pomodoro.dir/main.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/topi/Documentos/work/cliapps/main.cpp -o CMakeFiles/pomodoro.dir/main.cpp.s
+CMakeFiles/pomodoro.dir/src/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/pomodoro.dir/src/main.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/topi/Documentos/work/PomoCli/src/main.cpp -o CMakeFiles/pomodoro.dir/src/main.cpp.s
 
-CMakeFiles/pomodoro.dir/ui.cpp.o: CMakeFiles/pomodoro.dir/flags.make
-CMakeFiles/pomodoro.dir/ui.cpp.o: /home/topi/Documentos/work/cliapps/ui.cpp
-CMakeFiles/pomodoro.dir/ui.cpp.o: CMakeFiles/pomodoro.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/topi/Documentos/work/cliapps/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/pomodoro.dir/ui.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pomodoro.dir/ui.cpp.o -MF CMakeFiles/pomodoro.dir/ui.cpp.o.d -o CMakeFiles/pomodoro.dir/ui.cpp.o -c /home/topi/Documentos/work/cliapps/ui.cpp
+CMakeFiles/pomodoro.dir/src/ui.cpp.o: CMakeFiles/pomodoro.dir/flags.make
+CMakeFiles/pomodoro.dir/src/ui.cpp.o: /home/topi/Documentos/work/PomoCli/src/ui.cpp
+CMakeFiles/pomodoro.dir/src/ui.cpp.o: CMakeFiles/pomodoro.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/topi/Documentos/work/PomoCli/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/pomodoro.dir/src/ui.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pomodoro.dir/src/ui.cpp.o -MF CMakeFiles/pomodoro.dir/src/ui.cpp.o.d -o CMakeFiles/pomodoro.dir/src/ui.cpp.o -c /home/topi/Documentos/work/PomoCli/src/ui.cpp
 
-CMakeFiles/pomodoro.dir/ui.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/pomodoro.dir/ui.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/topi/Documentos/work/cliapps/ui.cpp > CMakeFiles/pomodoro.dir/ui.cpp.i
+CMakeFiles/pomodoro.dir/src/ui.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/pomodoro.dir/src/ui.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/topi/Documentos/work/PomoCli/src/ui.cpp > CMakeFiles/pomodoro.dir/src/ui.cpp.i
 
-CMakeFiles/pomodoro.dir/ui.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/pomodoro.dir/ui.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/topi/Documentos/work/cliapps/ui.cpp -o CMakeFiles/pomodoro.dir/ui.cpp.s
+CMakeFiles/pomodoro.dir/src/ui.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/pomodoro.dir/src/ui.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/topi/Documentos/work/PomoCli/src/ui.cpp -o CMakeFiles/pomodoro.dir/src/ui.cpp.s
 
 # Object files for target pomodoro
 pomodoro_OBJECTS = \
-"CMakeFiles/pomodoro.dir/main.cpp.o" \
-"CMakeFiles/pomodoro.dir/ui.cpp.o"
+"CMakeFiles/pomodoro.dir/src/main.cpp.o" \
+"CMakeFiles/pomodoro.dir/src/ui.cpp.o"
 
 # External object files for target pomodoro
 pomodoro_EXTERNAL_OBJECTS =
 
-pomodoro: CMakeFiles/pomodoro.dir/main.cpp.o
-pomodoro: CMakeFiles/pomodoro.dir/ui.cpp.o
+pomodoro: CMakeFiles/pomodoro.dir/src/main.cpp.o
+pomodoro: CMakeFiles/pomodoro.dir/src/ui.cpp.o
 pomodoro: CMakeFiles/pomodoro.dir/build.make
 pomodoro: CMakeFiles/pomodoro.dir/compiler_depend.ts
 pomodoro: _deps/ftxui-build/libftxui-screen.a
@@ -118,7 +118,7 @@ pomodoro: _deps/ftxui-build/libftxui-component.a
 pomodoro: _deps/ftxui-build/libftxui-dom.a
 pomodoro: _deps/ftxui-build/libftxui-screen.a
 pomodoro: CMakeFiles/pomodoro.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/topi/Documentos/work/cliapps/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable pomodoro"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/topi/Documentos/work/PomoCli/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable pomodoro"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/pomodoro.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -130,6 +130,6 @@ CMakeFiles/pomodoro.dir/clean:
 .PHONY : CMakeFiles/pomodoro.dir/clean
 
 CMakeFiles/pomodoro.dir/depend:
-	cd /home/topi/Documentos/work/cliapps/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/topi/Documentos/work/cliapps /home/topi/Documentos/work/cliapps /home/topi/Documentos/work/cliapps/build /home/topi/Documentos/work/cliapps/build /home/topi/Documentos/work/cliapps/build/CMakeFiles/pomodoro.dir/DependInfo.cmake "--color=$(COLOR)" pomodoro
+	cd /home/topi/Documentos/work/PomoCli/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/topi/Documentos/work/PomoCli /home/topi/Documentos/work/PomoCli /home/topi/Documentos/work/PomoCli/build /home/topi/Documentos/work/PomoCli/build /home/topi/Documentos/work/PomoCli/build/CMakeFiles/pomodoro.dir/DependInfo.cmake "--color=$(COLOR)" pomodoro
 .PHONY : CMakeFiles/pomodoro.dir/depend
 

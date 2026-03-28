@@ -1,9 +1,9 @@
 file(REMOVE_RECURSE
   "CMakeFiles/pomodoro.dir/link.d"
-  "CMakeFiles/pomodoro.dir/main.cpp.o"
-  "CMakeFiles/pomodoro.dir/main.cpp.o.d"
-  "CMakeFiles/pomodoro.dir/ui.cpp.o"
-  "CMakeFiles/pomodoro.dir/ui.cpp.o.d"
+  "CMakeFiles/pomodoro.dir/src/main.cpp.o"
+  "CMakeFiles/pomodoro.dir/src/main.cpp.o.d"
+  "CMakeFiles/pomodoro.dir/src/ui.cpp.o"
+  "CMakeFiles/pomodoro.dir/src/ui.cpp.o.d"
   "pomodoro"
   "pomodoro.pdb"
 )

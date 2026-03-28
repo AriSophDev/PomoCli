@@ -1,3 +1,3 @@
-/home/topi/Documentos/work/cliapps/build/_deps/ftxui-subbuild/CMakeFiles/ftxui-populate.dir
-/home/topi/Documentos/work/cliapps/build/_deps/ftxui-subbuild/CMakeFiles/edit_cache.dir
-/home/topi/Documentos/work/cliapps/build/_deps/ftxui-subbuild/CMakeFiles/rebuild_cache.dir
+/home/topi/Documentos/work/PomoCli/build/_deps/ftxui-subbuild/CMakeFiles/ftxui-populate.dir
+/home/topi/Documentos/work/PomoCli/build/_deps/ftxui-subbuild/CMakeFiles/edit_cache.dir
+/home/topi/Documentos/work/PomoCli/build/_deps/ftxui-subbuild/CMakeFiles/rebuild_cache.dir

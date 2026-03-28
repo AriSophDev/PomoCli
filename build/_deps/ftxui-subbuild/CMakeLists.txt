@@ -1,7 +1,7 @@
 # Distributed under the OSI-approved BSD 3-Clause License.  See accompanying
 # file LICENSE.rst or https://cmake.org/licensing for details.
 
-cmake_minimum_required(VERSION 4.3.0)
+cmake_minimum_required(VERSION 4.3.1)
 
 # Reject any attempt to use a toolchain file. We must not use one because
 # we could be downloading it here. If the CMAKE_TOOLCHAIN_FILE environment
@@ -28,8 +28,8 @@ set_property(GLOBAL PROPERTY _CMAKE_FindGit_GIT_EXECUTABLE_VERSION
 include(ExternalProject)
 ExternalProject_Add(ftxui-populate
                      "UPDATE_DISCONNECTED" "False" "GIT_REPOSITORY" "https://github.com/ArthurSonzogni/ftxui" "EXTERNALPROJECT_INTERNAL_ARGUMENT_SEPARATOR" "GIT_TAG" "v5.0.0"
-                    SOURCE_DIR          "/home/topi/Documentos/work/cliapps/build/_deps/ftxui-src"
-                    BINARY_DIR          "/home/topi/Documentos/work/cliapps/build/_deps/ftxui-build"
+                    SOURCE_DIR          "/home/topi/Documentos/work/PomoCli/build/_deps/ftxui-src"
+                    BINARY_DIR          "/home/topi/Documentos/work/PomoCli/build/_deps/ftxui-build"
                     CONFIGURE_COMMAND   ""
                     BUILD_COMMAND       ""
                     INSTALL_COMMAND     ""

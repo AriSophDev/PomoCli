@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/topi/Documentos/work/cliapps/main.cpp" "CMakeFiles/pomodoro.dir/main.cpp.o" "gcc" "CMakeFiles/pomodoro.dir/main.cpp.o.d"
-  "/home/topi/Documentos/work/cliapps/ui.cpp" "CMakeFiles/pomodoro.dir/ui.cpp.o" "gcc" "CMakeFiles/pomodoro.dir/ui.cpp.o.d"
+  "/home/topi/Documentos/work/PomoCli/src/main.cpp" "CMakeFiles/pomodoro.dir/src/main.cpp.o" "gcc" "CMakeFiles/pomodoro.dir/src/main.cpp.o.d"
+  "/home/topi/Documentos/work/PomoCli/src/ui.cpp" "CMakeFiles/pomodoro.dir/src/ui.cpp.o" "gcc" "CMakeFiles/pomodoro.dir/src/ui.cpp.o.d"
   "" "pomodoro" "gcc" "CMakeFiles/pomodoro.dir/link.d"
   )
 

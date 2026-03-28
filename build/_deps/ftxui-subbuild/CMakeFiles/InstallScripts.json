@@ -1,7 +1,7 @@
 {
 	"InstallScripts" : 
 	[
-		"/home/topi/Documentos/work/cliapps/build/_deps/ftxui-subbuild/cmake_install.cmake"
+		"/home/topi/Documentos/work/PomoCli/build/_deps/ftxui-subbuild/cmake_install.cmake"
 	],
 	"Parallel" : false
 }

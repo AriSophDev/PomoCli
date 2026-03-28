@@ -8,12 +8,12 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/topi/Documentos/work/cliapps/build/_deps/ftxui-src/src/ftxui/screen/box.cpp" "_deps/ftxui-build/CMakeFiles/screen.dir/src/ftxui/screen/box.cpp.o" "gcc" "_deps/ftxui-build/CMakeFiles/screen.dir/src/ftxui/screen/box.cpp.o.d"
-  "/home/topi/Documentos/work/cliapps/build/_deps/ftxui-src/src/ftxui/screen/color.cpp" "_deps/ftxui-build/CMakeFiles/screen.dir/src/ftxui/screen/color.cpp.o" "gcc" "_deps/ftxui-build/CMakeFiles/screen.dir/src/ftxui/screen/color.cpp.o.d"
-  "/home/topi/Documentos/work/cliapps/build/_deps/ftxui-src/src/ftxui/screen/color_info.cpp" "_deps/ftxui-build/CMakeFiles/screen.dir/src/ftxui/screen/color_info.cpp.o" "gcc" "_deps/ftxui-build/CMakeFiles/screen.dir/src/ftxui/screen/color_info.cpp.o.d"
-  "/home/topi/Documentos/work/cliapps/build/_deps/ftxui-src/src/ftxui/screen/screen.cpp" "_deps/ftxui-build/CMakeFiles/screen.dir/src/ftxui/screen/screen.cpp.o" "gcc" "_deps/ftxui-build/CMakeFiles/screen.dir/src/ftxui/screen/screen.cpp.o.d"
-  "/home/topi/Documentos/work/cliapps/build/_deps/ftxui-src/src/ftxui/screen/string.cpp" "_deps/ftxui-build/CMakeFiles/screen.dir/src/ftxui/screen/string.cpp.o" "gcc" "_deps/ftxui-build/CMakeFiles/screen.dir/src/ftxui/screen/string.cpp.o.d"
-  "/home/topi/Documentos/work/cliapps/build/_deps/ftxui-src/src/ftxui/screen/terminal.cpp" "_deps/ftxui-build/CMakeFiles/screen.dir/src/ftxui/screen/terminal.cpp.o" "gcc" "_deps/ftxui-build/CMakeFiles/screen.dir/src/ftxui/screen/terminal.cpp.o.d"
+  "/home/topi/Documentos/work/PomoCli/build/_deps/ftxui-src/src/ftxui/screen/box.cpp" "_deps/ftxui-build/CMakeFiles/screen.dir/src/ftxui/screen/box.cpp.o" "gcc" "_deps/ftxui-build/CMakeFiles/screen.dir/src/ftxui/screen/box.cpp.o.d"
+  "/home/topi/Documentos/work/PomoCli/build/_deps/ftxui-src/src/ftxui/screen/color.cpp" "_deps/ftxui-build/CMakeFiles/screen.dir/src/ftxui/screen/color.cpp.o" "gcc" "_deps/ftxui-build/CMakeFiles/screen.dir/src/ftxui/screen/color.cpp.o.d"
+  "/home/topi/Documentos/work/PomoCli/build/_deps/ftxui-src/src/ftxui/screen/color_info.cpp" "_deps/ftxui-build/CMakeFiles/screen.dir/src/ftxui/screen/color_info.cpp.o" "gcc" "_deps/ftxui-build/CMakeFiles/screen.dir/src/ftxui/screen/color_info.cpp.o.d"
+  "/home/topi/Documentos/work/PomoCli/build/_deps/ftxui-src/src/ftxui/screen/screen.cpp" "_deps/ftxui-build/CMakeFiles/screen.dir/src/ftxui/screen/screen.cpp.o" "gcc" "_deps/ftxui-build/CMakeFiles/screen.dir/src/ftxui/screen/screen.cpp.o.d"
+  "/home/topi/Documentos/work/PomoCli/build/_deps/ftxui-src/src/ftxui/screen/string.cpp" "_deps/ftxui-build/CMakeFiles/screen.dir/src/ftxui/screen/string.cpp.o" "gcc" "_deps/ftxui-build/CMakeFiles/screen.dir/src/ftxui/screen/string.cpp.o.d"
+  "/home/topi/Documentos/work/PomoCli/build/_deps/ftxui-src/src/ftxui/screen/terminal.cpp" "_deps/ftxui-build/CMakeFiles/screen.dir/src/ftxui/screen/terminal.cpp.o" "gcc" "_deps/ftxui-build/CMakeFiles/screen.dir/src/ftxui/screen/terminal.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

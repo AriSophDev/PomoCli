@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/topi/Documentos/work/cliapps
+CMAKE_SOURCE_DIR = /home/topi/Documentos/work/PomoCli
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/topi/Documentos/work/cliapps/build
+CMAKE_BINARY_DIR = /home/topi/Documentos/work/PomoCli/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -152,9 +152,9 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/topi/Documentos/work/cliapps/build/CMakeFiles /home/topi/Documentos/work/cliapps/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/topi/Documentos/work/PomoCli/build/CMakeFiles /home/topi/Documentos/work/PomoCli/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/topi/Documentos/work/cliapps/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/topi/Documentos/work/PomoCli/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -233,53 +233,53 @@ component/fast:
 	$(MAKE) $(MAKESILENT) -f _deps/ftxui-build/CMakeFiles/component.dir/build.make _deps/ftxui-build/CMakeFiles/component.dir/build
 .PHONY : component/fast
 
-main.o: main.cpp.o
-.PHONY : main.o
+src/main.o: src/main.cpp.o
+.PHONY : src/main.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pomodoro.dir/build.make CMakeFiles/pomodoro.dir/main.cpp.o
-.PHONY : main.cpp.o
+src/main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pomodoro.dir/build.make CMakeFiles/pomodoro.dir/src/main.cpp.o
+.PHONY : src/main.cpp.o
 
-main.i: main.cpp.i
-.PHONY : main.i
+src/main.i: src/main.cpp.i
+.PHONY : src/main.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pomodoro.dir/build.make CMakeFiles/pomodoro.dir/main.cpp.i
-.PHONY : main.cpp.i
+src/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pomodoro.dir/build.make CMakeFiles/pomodoro.dir/src/main.cpp.i
+.PHONY : src/main.cpp.i
 
-main.s: main.cpp.s
-.PHONY : main.s
+src/main.s: src/main.cpp.s
+.PHONY : src/main.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pomodoro.dir/build.make CMakeFiles/pomodoro.dir/main.cpp.s
-.PHONY : main.cpp.s
+src/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pomodoro.dir/build.make CMakeFiles/pomodoro.dir/src/main.cpp.s
+.PHONY : src/main.cpp.s
 
-ui.o: ui.cpp.o
-.PHONY : ui.o
+src/ui.o: src/ui.cpp.o
+.PHONY : src/ui.o
 
 # target to build an object file
-ui.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pomodoro.dir/build.make CMakeFiles/pomodoro.dir/ui.cpp.o
-.PHONY : ui.cpp.o
+src/ui.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pomodoro.dir/build.make CMakeFiles/pomodoro.dir/src/ui.cpp.o
+.PHONY : src/ui.cpp.o
 
-ui.i: ui.cpp.i
-.PHONY : ui.i
+src/ui.i: src/ui.cpp.i
+.PHONY : src/ui.i
 
 # target to preprocess a source file
-ui.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pomodoro.dir/build.make CMakeFiles/pomodoro.dir/ui.cpp.i
-.PHONY : ui.cpp.i
+src/ui.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pomodoro.dir/build.make CMakeFiles/pomodoro.dir/src/ui.cpp.i
+.PHONY : src/ui.cpp.i
 
-ui.s: ui.cpp.s
-.PHONY : ui.s
+src/ui.s: src/ui.cpp.s
+.PHONY : src/ui.s
 
 # target to generate assembly for a file
-ui.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pomodoro.dir/build.make CMakeFiles/pomodoro.dir/ui.cpp.s
-.PHONY : ui.cpp.s
+src/ui.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pomodoro.dir/build.make CMakeFiles/pomodoro.dir/src/ui.cpp.s
+.PHONY : src/ui.cpp.s
 
 # Help Target
 help:
@@ -299,12 +299,12 @@ help:
 	@echo "... dom"
 	@echo "... pomodoro"
 	@echo "... screen"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
-	@echo "... ui.o"
-	@echo "... ui.i"
-	@echo "... ui.s"
+	@echo "... src/main.o"
+	@echo "... src/main.i"
+	@echo "... src/main.s"
+	@echo "... src/ui.o"
+	@echo "... src/ui.i"
+	@echo "... src/ui.s"
 .PHONY : help
 
 

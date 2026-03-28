@@ -20,24 +20,35 @@ events:
     names:
       - "uname"
     candidate_directories:
-      - "/home/topi/.cargo/bin/"
+      - "/home/topi/.spicetify/"
       - "/usr/local/bin/"
       - "/usr/bin/"
       - "/bin/"
+      - "/usr/local/sbin/"
+      - "/var/lib/flatpak/exports/bin/"
+      - "/usr/bin/site_perl/"
+      - "/usr/bin/vendor_perl/"
+      - "/usr/bin/core_perl/"
     searched_directories:
-      - "/home/topi/.cargo/bin/uname"
+      - "/home/topi/.spicetify/uname"
       - "/usr/local/bin/uname"
     found: "/usr/bin/uname"
     search_context:
       ENV{PATH}:
-        - "/home/topi/.cargo/bin"
+        - "/home/topi/.spicetify"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/bin"
+        - "/usr/local/sbin"
+        - "/var/lib/flatpak/exports/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
   -
     kind: "message-v1"
     backtrace:
       - "/usr/share/cmake/Modules/CMakeDetermineSystem.cmake:212 (message)"
       - "CMakeLists.txt:16 (project)"
     message: |
-      The system is: Linux - 6.18.19-1-lts - x86_64
+      The system is: Linux - 6.19.10-1-cachyos - x86_64
 ...

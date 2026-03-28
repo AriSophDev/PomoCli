@@ -21,8 +21,8 @@ FetchContent_MakeAvailable(ftxui)
 find_package(Threads REQUIRED)
 
 add_executable(pomodoro 
-    main.cpp 
-    ui.cpp
+    src/main.cpp 
+    src/ui.cpp
 )
 
 # 4. Enlace de Librerías
