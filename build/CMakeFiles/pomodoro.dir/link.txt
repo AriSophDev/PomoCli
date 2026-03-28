@@ -1,1 +1,0 @@
-/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/pomodoro.dir/link.d CMakeFiles/pomodoro.dir/src/main.cpp.o CMakeFiles/pomodoro.dir/src/ui.cpp.o -o pomodoro  _deps/ftxui-build/libftxui-screen.a _deps/ftxui-build/libftxui-dom.a _deps/ftxui-build/libftxui-component.a _deps/ftxui-build/libftxui-dom.a _deps/ftxui-build/libftxui-screen.a
