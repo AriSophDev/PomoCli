@@ -4,6 +4,7 @@ project(PomoCli)
 # 1. Configuración de C++ (Usamos C++17 para compatibilidad con FTXUI)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # 2. Gestión de Dependencias (Descarga automática de FTXUI)
 include(FetchContent)
