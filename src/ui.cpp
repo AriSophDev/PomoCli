@@ -54,6 +54,9 @@ void iniciar_interfaz_pomodoro(int work_mins, int rest_mins, int total_cycles) {
                         enviar_notificacion("PomoCli",
                                             "Tiempo terminado! A descansar,");
                     } else {
+                        es_descanso = false;
+                        ciclo_actual++;
+                        segundos_restantes = work_mins * 60;
                         // sonido de "se acabo el Descanso"
                         system("pw-play "
                                "/usr/share/sounds/freedesktop/stereo/"
