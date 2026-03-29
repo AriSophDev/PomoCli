@@ -7,105 +7,118 @@
 #include <ftxui/component/screen_interactive.hpp>
 #include <ftxui/dom/elements.hpp>
 #include <thread>
-#include <string>
+
+using namespace ftxui;
+using namespace std;
 
 void enviar_notificacion(std::string titulo, std::string mensaje) {
-    const char* home_env = std::getenv("HOME");
-    std::string home = home_env ? home_env : "";
-    std::string icono = home + "/.local/share/icons/pomocli.png";
+    string home = std::getenv("HOME");
+    string icono = home + "../icon.png";
 
     // Construimos el comando con el icono personalizado
-    std::string comando = "notify-send '" + titulo + "' '" + mensaje + "' -i " + icono + " &";
+    string comando =
+        "notify-send '" + titulo + "' '" + mensaje + "' -i " + icono + " &";
 
     std::system(comando.c_str());
 }
 
 void iniciar_interfaz_pomodoro(int work_mins, int rest_mins, int total_cycles) {
-    auto screen = ftxui::ScreenInteractive::TerminalOutput();
+    auto screen = ScreenInteractive::TerminalOutput();
 
     // Variables atómicas para que el hilo del timer y la UI se comuniquen
-    std::atomic<bool> pausado{false};
-    std::atomic<int> ciclo_actual{1};
-    std::atomic<int> segundos_restantes{work_mins * 60};
-    std::atomic<bool> es_descanso{false};
-    std::atomic<bool> ejecutando{true};
+    atomic<bool> pausado{false};
+    atomic<int> ciclo_actual{1};
+    atomic<int> segundos_restantes{work_mins * 60};
+    atomic<bool> es_descanso{false};
+    atomic<bool> ejecutando{true};
 
     // --- HILO DE LÓGICA  ---
-    std::thread timer_thread([&]() {
-        while (ejecutando.load() && ciclo_actual.load() <= total_cycles) {
-            std::this_thread::sleep_for(std::chrono::seconds(1));
-            if (!pausado.load()) {
-                if (segundos_restantes.load() > 0) {
+    thread timer_thread([&]() {
+        while (ejecutando && ciclo_actual <= total_cycles) {
+            this_thread::sleep_for(chrono::seconds(1));
+            if (!pausado) {
+                this_thread::sleep_for(chrono::seconds(1));
+
+                if (segundos_restantes > 0) {
                     segundos_restantes--;
                 } else {
                     // Cambio de estado: Trabajo <-> Descanso
-                    if (!es_descanso.load()) {
+                    if (!es_descanso) {
                         es_descanso = true;
+                        ciclo_actual++;
                         segundos_restantes = rest_mins * 60;
 
                         // sonido cuando "termine de trabajar"
-                        std::system("pw-play /usr/share/sounds/freedesktop/stereo/complete.oga &");
-                        enviar_notificacion("PomoCli", "Tiempo terminado! A descansar.");
+                        system("pw-play "
+                               "/usr/share/sounds/freedesktop/stereo/"
+                               "complete.oga &");
+                        enviar_notificacion("PomoCli",
+                                            "Tiempo terminado! A descansar,");
                     } else {
-                        es_descanso = false;
-                        ciclo_actual++;
-                        segundos_restantes = work_mins * 60;
                         // sonido de "se acabo el Descanso"
-                        std::system("pw-play /usr/share/sounds/freedesktop/stereo/complete.oga &");
-                        enviar_notificacion("PomoCli", "Tiempo de descanso terminado! A trabajar.");
+                        system("pw-play "
+                               "/usr/share/sounds/freedesktop/stereo/"
+                               "complete.oga &");
+                        enviar_notificacion("PomoCli",
+                                            "Tiempo terminado! A descansar,");
                     }
                 }
+                // FTXUI que refresque la pantalla
             } else {
-                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                this_thread::sleep_for(chrono::milliseconds(100));
             }
-            screen.PostEvent(ftxui::Event::Custom);
+            screen.PostEvent(Event::Custom);
         }
 
-        Storage::guardar_progreso(work_mins, ciclo_actual.load() - (es_descanso ? 0 : 1));
+        Storage::guardar_progreso(work_mins, total_cycles);
     });
 
     // --- RENDERIZADO (UI) ---
-    auto renderer = ftxui::Renderer([&] {
-        int r = segundos_restantes.load();
-        int m = r / 60;
-        int s = r % 60;
-        float ratio = (float)r / (float)((es_descanso.load() ? rest_mins : work_mins) * 60);
+    auto renderer = Renderer([&] {
+        int m = segundos_restantes / 60;
+        int s = segundos_restantes % 60;
+        float ratio = (float)segundos_restantes /
+                      (float)((es_descanso ? rest_mins : work_mins) * 60);
 
-        std::string tiempo = std::to_string(m) + ":" + (s < 10 ? "0" : "") + std::to_string(s);
-        std::string titulo = es_descanso.load() ? " ☕ DESCANSO " : " 💻 TRABAJO ";
-        if (pausado.load())
+        string tiempo = to_string(m) + ":" + (s < 10 ? "0" : "") + to_string(s);
+        string titulo = es_descanso ? " ☕ DESCANSO " : " 💻 TRABAJO ";
+        if (pausado)
             titulo = " (PAUSADO)";
 
-        auto color_tema = es_descanso.load() ? ftxui::Color::Green : ftxui::Color::Red;
+        auto color_tema = es_descanso ? Color::Green : Color::Red;
 
-        return ftxui::vbox(
-            {ftxui::text(" PomoCli ") | ftxui::bold | ftxui::center | ftxui::border, ftxui::separator(),
-             ftxui::hbox({
-                 ftxui::text(" Ciclo: ") | ftxui::dim,
-                 ftxui::text(std::to_string(ciclo_actual.load()) + "/" + std::to_string(total_cycles)) | ftxui::bold,
+        return vbox(
+            {text(" PomoCli ") | bold | center | border, separator(),
+             hbox({
+                 text(" Ciclo: ") | dim,
+                 text(to_string(ciclo_actual) + "/" + to_string(total_cycles)) |
+                     bold,
              }),
-             ftxui::vbox({
-                 ftxui::text(titulo) | ftxui::center | ftxui::color(color_tema),
-                 ftxui::text(tiempo) | ftxui::center | ftxui::color(color_tema),
-                 ftxui::gauge(ratio) | ftxui::color(color_tema),
-             }) | ftxui::flex | ftxui::border,
-             ftxui::text(" [Space] Pausa [S] Skip [Q] Salir ") | ftxui::dim | ftxui::center});
+             vbox({
+                 text(titulo) | center | color(color_tema),
+                 text(tiempo) | center | color(color_tema),
+                 gauge(ratio) | color(color_tema),
+             }) | flex |
+                 border,
+             text(" [Space] Pausa [S] Skip [Q] Salir ") | dim | center});
     });
 
     // Captura de eventos para cerrar
-    auto component = ftxui::CatchEvent(renderer, [&](ftxui::Event event) {
-        if (event == ftxui::Event::Character('S') || event == ftxui::Event::Character('s')) {
+    auto component = CatchEvent(renderer, [&](Event event) {
+        if (event == Event::Character('S') || event == Event::Character('s')) {
             segundos_restantes = 0; // Forzar cambio de estado
             return true;
         }
 
-        if (event == ftxui::Event::Character(' ')) {
-            pausado = !pausado.load(); // Toggle pausa
+        if (event == Event::Character(' ')) {
+            pausado = !pausado; // Toggle pausa
             return true;
         }
 
-        if (event == ftxui::Event::Character('q') || event == ftxui::Event::Character('Q')) {
+        if (event == Event::Character('q') || event == Event::Character('Q')) {
             ejecutando = false;
+            if (timer_thread.joinable())
+                timer_thread.detach(); // Evitar bloqueo al salir
             screen.ExitLoopClosure()();
             return true;
         }
