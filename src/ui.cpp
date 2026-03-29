@@ -15,7 +15,6 @@ void enviar_notificacion(std::string titulo, std::string mensaje) {
     string home = std::getenv("HOME");
     string icono = home + "../icon.png";
 
-    // Construimos el comando con el icono personalizado
     string comando =
         "notify-send '" + titulo + "' '" + mensaje + "' -i " + icono + " &";
 
