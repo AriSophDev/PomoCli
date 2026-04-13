@@ -47,10 +47,10 @@ git clone https://github.com/AriSophDev/PomoCli.git
 ### 🟡 Fase 2: Experiencia de Usuario & Datos (En Progreso)
 - [x] **Controles de Teclado:** Soporte para `Espacio` (Pausa), `S` (Skip) y `Q` (Salir).
 - [ ] **Persistencia JSON:** Guardado automático de sesiones en `stats.json` (`nlohmann/json`).
-- [ ] **Temas Dinámicos:** Cambios de color (Rojo/Verde/Azul) según el estado del timer.
+- [x] **Temas Dinámicos:** Cambios de color (Rojo/Verde/Azul) según el estado del timer.
 - [ ] **Argumentos de Usuario:** Soporte para tiempos personalizados (e.g., `./pomodoro 25 5`).
 
 ### 🔵 Fase 3: Portabilidad & Distribución (Próximamente)
 - [ ] **Soporte Fedora:** Crear un archivo `.spec` o instrucciones para `dnf` y asegurar compatibilidad con `Pipewire`.
-- [ ] **Soporte macOS:** Adaptar las llamadas de sistema de audio a `afplay` (nativo de Mac) y soporte para `brew`.
+- [x] **Soporte macOS:** Adaptar las llamadas de sistema de audio a `afplay` (nativo de Mac) y soporte para `brew`.
 - [ ] **Binary Release:** Scripts de instalación automatizada (`install.sh`) para diferentes distros.
