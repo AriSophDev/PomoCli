@@ -19,12 +19,18 @@ Diseñada para desarrolladores que buscan un flujo de trabajo sin distracciones 
     * `S`: Saltar (Skip) el ciclo actual.
     * `Q`: Salir de la aplicación de forma segura.
 
-## 🛠️ Requisitos (Arch Linux)
+## 🛠️ Requisitos (Arch Linux, Fedora O MacOS)
 
 Asegúrate de tener instaladas las dependencias base para compilar y ejecutar las alertas:
 
 ```bash
 sudo pacman -S cmake base-devel alsa-utils libnotify
+```
+
+MacOS
+
+```bash
+brew install cmake
 ```
 ## Instalacion 
 
