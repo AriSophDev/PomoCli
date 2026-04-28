@@ -1,42 +1,64 @@
-#!/bin/bash
-
-# Detener el script si ocurre algún error
+#!/usr/bin/env sh
 set -e
 
-echo "------------------------------------------"
-echo "  Instalador de PomoCli"
-echo "------------------------------------------"
+REPO="AriSophDev/PomoCli"
+VERSION="latest"
 
-# 1. Asegurarse de que estamos en la raíz del proyecto
-if [ ! -f "CMakeLists.txt" ]; then
-    echo " Error: Ejecuta este script desde la raíz del proyecto PomoCli."
-    exit 1
-fi
+echo "📦 Instalando PomoCli..."
 
-# 2. Preparar carpeta de compilación
-if [ -d "build" ]; then
-    echo " Limpiando caché de compilación previo..."
-    # Borramos solo el caché para no tener que descargar ftxui y json de nuevo cada vez
-    rm -f build/CMakeCache.txt
+# Detectar OS
+
+OS="$(uname)"
+echo " Detectado: $OS"
+
+# Verificar dependencias
+
+need() {
+command -v "$1" >/dev/null 2>&1 || {
+echo " Necesitas instalar '$1' antes de continuar."
+exit 1
+}
+}
+
+need curl
+need tar
+need cmake
+
+# URL del release (usa releases, no git clone)
+
+if [ "$VERSION" = "latest" ]; then
+URL="https://github.com/$REPO/archive/refs/heads/main.tar.gz"
 else
-    echo " Creando carpeta de compilación..."
-    mkdir build
+URL="https://github.com/$REPO/archive/refs/tags/$VERSION.tar.gz"
 fi
 
-# 3. Configurar y Compilar
-echo " Compilando la última versión..."
-cmake -S . -B build
-cmake --build build -j$(nproc)
+TMP_DIR="$(mktemp -d)"
+cd "$TMP_DIR"
 
-# 4. Instalación del binario
-echo " Instalando en /usr/local/bin/pomodoro..."
-echo "Nota: Se requieren permisos de administrador (sudo)."
-sudo cp build/pomodoro /usr/local/bin/pomodoro
+echo " Descargando código..."
+curl -L "$URL" -o app.tar.gz
 
-# 5. Asegurar permisos de ejecución
-sudo chmod +x /usr/local/bin/pomodoro
+echo " Extrayendo..."
+mkdir src
+tar -xzf app.tar.gz -C src --strip-components=1
 
-echo "------------------------------------------"
-echo " ¡Instalación completada con éxito!"
-echo " Ahora puedes usar el comando 'pomodoro' desde cualquier terminal."
-echo "------------------------------------------"
+cd src
+
+echo " Compilando..."
+cmake -B build -S . -DCMAKE_BUILD_TYPE=Release
+cmake --build build
+
+echo " Instalando..."
+
+# Detectar si puede escribir sin sudo
+
+PREFIX="/usr/local"
+if [ ! -w "$PREFIX" ]; then
+echo " Se requiere sudo para instalar en $PREFIX"
+sudo cmake --install build
+else
+cmake --install build
+fi
+
+echo " PomoCli instalado correctamente"
+echo " Ejecuta: pomocli"
