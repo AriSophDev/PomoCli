@@ -14,12 +14,11 @@ struct Session {
     int completed_cycles;
 };
 
-// Macro para serializar el struct
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Session, date, work_minutes,
                                    completed_cycles)
 
 namespace Storage {
-// Cambiamos a inline para evitar problemas de enlace múltiple y seguir el estándar C++
+
 inline std::string get_current_date() {
     std::time_t t = std::time(nullptr);
     char mbstr[11];
@@ -31,24 +30,29 @@ inline std::string get_current_date() {
 
 inline void guardar_progreso(int work, int cycles) {
     std::string filename = "stats.json";
-    json j_list = json::array();
-
-    std::ifstream file_in(filename);
-    if (file_in.is_open()) {
-        try {
-            file_in >> j_list;
-        } catch (...) {
-            j_list = json::array();
-        }
-        file_in.close();
-    }
-
-    Session nueva = {get_current_date(), work, cycles};
-    j_list.push_back(nueva);
+    std::string hoy = get_current_date();
+    Session nueva = {hoy, work, cycles};
+    json j = nueva;
 
     std::ofstream file_out(filename);
-    file_out << j_list.dump(4);
+    file_out << j.dump(4);
 }
-} // namespace Storage
+
+inline std::string obtener_resumen() {
+    std::string filename = "stats.json";
+    std::ifstream file(filename);
+    if (!file.is_open()) return "No hay datos guardados.";
+
+    json j;
+    try {
+        file >> j;
+        Session s = j.get<Session>();
+        return "Última sesión (" + s.date + "): " + std::to_string(s.work_minutes) + " min, " + 
+               std::to_string(s.completed_cycles) + " ciclos completados.";
+    } catch (...) {
+        return "Error al leer estadísticas o no hay datos.";
+    }
+}
+}
 
 #endif

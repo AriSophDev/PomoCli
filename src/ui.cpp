@@ -8,6 +8,7 @@
 #include <ftxui/dom/elements.hpp>
 #include <memory>
 #include <thread>
+#include <iostream>
 
 using namespace ftxui;
 using namespace std;
@@ -19,8 +20,8 @@ void enviar_notificacion(std::string titulo, std::string mensaje) {
     comando = "osascript -e 'display notification \"" + mensaje + 
               "\" with title \"" + titulo + "\"' &";
 #else
-    std::string home = std::getenv("HOME");
-    std::string icono = home + "/.local/share/icons/pomocli.png";
+    const char* home = std::getenv("HOME");
+    std::string icono = (home ? std::string(home) : ".") + "/.local/share/icons/pomocli.png";
     comando = "notify-send '" + titulo + "' '" + mensaje + "' -i " + icono + " &";
 #endif
 
@@ -30,7 +31,7 @@ void enviar_notificacion(std::string titulo, std::string mensaje) {
 void iniciar_interfaz_pomodoro(int work_mins, int rest_mins, int total_cycles) {
     auto screen = ScreenInteractive::TerminalOutput();
 
-    // Variables atómicas para que el hilo del timer y la UI se comuniquen
+    // Variables compartidas entre el hilo del timer y la UI
     auto pausado = make_shared<atomic<bool>>(false);
     auto ciclo_actual = make_shared<atomic<int>>(1);
     auto segundos_restantes = make_shared<atomic<int>>(work_mins * 60);
@@ -50,7 +51,6 @@ void iniciar_interfaz_pomodoro(int work_mins, int rest_mins, int total_cycles) {
                         *es_descanso = true;
                         *segundos_restantes = rest_mins * 60;
 
-                        // sonido cuando "termine de trabajar"
 #ifdef __APPLE__
                         system("afplay /System/Library/Sounds/Glass.aiff &");
 #else
@@ -61,7 +61,7 @@ void iniciar_interfaz_pomodoro(int work_mins, int rest_mins, int total_cycles) {
                         *es_descanso = false;
                         (*ciclo_actual)++;
                         *segundos_restantes = work_mins * 60;
-                        // sonido de "se acabo el Descanso"
+                        
 #ifdef __APPLE__
                         system("afplay /System/Library/Sounds/Glass.aiff &");
 #else
@@ -74,7 +74,13 @@ void iniciar_interfaz_pomodoro(int work_mins, int rest_mins, int total_cycles) {
             }
         }
 
-        Storage::guardar_progreso(work_mins, *ciclo_actual - 1);
+        // Guardar progreso al terminar o salir
+        int ciclos_completados = *ciclo_actual - 1;
+        if (*es_descanso) { 
+            // Si estaba en descanso, el ciclo de trabajo ya se completó
+            ciclos_completados = *ciclo_actual;
+        }
+        Storage::guardar_progreso(work_mins * ciclos_completados, ciclos_completados);
     });
 
     // --- RENDERIZADO (UI) ---
@@ -107,15 +113,15 @@ void iniciar_interfaz_pomodoro(int work_mins, int rest_mins, int total_cycles) {
              text(" [Space] Pausa [S] Skip [Q] Salir ") | dim | center});
     });
 
-    // Captura de eventos para cerrar
+    // Captura de eventos
     auto component = CatchEvent(renderer, [&](Event event) {
         if (event == Event::Character('S') || event == Event::Character('s')) {
-            *segundos_restantes = 0; // Forzar cambio de estado
+            *segundos_restantes = 0; 
             return true;
         }
 
         if (event == Event::Character(' ')) {
-            *pausado = !*pausado; // Toggle pausa
+            *pausado = !*pausado;
             return true;
         }
 
@@ -132,4 +138,6 @@ void iniciar_interfaz_pomodoro(int work_mins, int rest_mins, int total_cycles) {
     *ejecutando = false;
     if (timer_thread.joinable())
         timer_thread.join();
+
+    std::cout << "\n" << Storage::obtener_resumen() << std::endl;
 }
