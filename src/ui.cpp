@@ -6,17 +6,24 @@
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/screen_interactive.hpp>
 #include <ftxui/dom/elements.hpp>
+#include <memory>
 #include <thread>
+#include <iostream>
 
 using namespace ftxui;
 using namespace std;
 
 void enviar_notificacion(std::string titulo, std::string mensaje) {
-    string home = std::getenv("HOME");
-    string icono = home + "../icon.png";
+    std::string comando;
 
-    string comando =
-        "notify-send '" + titulo + "' '" + mensaje + "' -i " + icono + " &";
+#ifdef __APPLE__
+    comando = "osascript -e 'display notification \"" + mensaje + 
+              "\" with title \"" + titulo + "\"' &";
+#else
+    const char* home = std::getenv("HOME");
+    std::string icono = (home ? std::string(home) : ".") + "/.local/share/icons/pomocli.png";
+    comando = "notify-send '" + titulo + "' '" + mensaje + "' -i " + icono + " &";
+#endif
 
     std::system(comando.c_str());
 }
@@ -24,76 +31,77 @@ void enviar_notificacion(std::string titulo, std::string mensaje) {
 void iniciar_interfaz_pomodoro(int work_mins, int rest_mins, int total_cycles) {
     auto screen = ScreenInteractive::TerminalOutput();
 
-    // Variables atómicas para que el hilo del timer y la UI se comuniquen
-    atomic<bool> pausado{false};
-    atomic<int> ciclo_actual{1};
-    atomic<int> segundos_restantes{work_mins * 60};
-    atomic<bool> es_descanso{false};
-    atomic<bool> ejecutando{true};
+    // Variables compartidas entre el hilo del timer y la UI
+    auto pausado = make_shared<atomic<bool>>(false);
+    auto ciclo_actual = make_shared<atomic<int>>(1);
+    auto segundos_restantes = make_shared<atomic<int>>(work_mins * 60);
+    auto es_descanso = make_shared<atomic<bool>>(false);
+    auto ejecutando = make_shared<atomic<bool>>(true);
 
     // --- HILO DE LÓGICA  ---
-    thread timer_thread([&]() {
-        while (ejecutando && ciclo_actual <= total_cycles) {
+    thread timer_thread([=, &screen]() {
+        while (*ejecutando && *ciclo_actual <= total_cycles) {
             this_thread::sleep_for(chrono::seconds(1));
-            if (!pausado) {
-                this_thread::sleep_for(chrono::seconds(1));
-
-                if (segundos_restantes > 0) {
-                    segundos_restantes--;
+            if (!*pausado) {
+                if (*segundos_restantes > 0) {
+                    (*segundos_restantes)--;
                 } else {
                     // Cambio de estado: Trabajo <-> Descanso
-                    if (!es_descanso) {
-                        es_descanso = true;
-                        ciclo_actual++;
-                        segundos_restantes = rest_mins * 60;
+                    if (!*es_descanso) {
+                        *es_descanso = true;
+                        *segundos_restantes = rest_mins * 60;
 
-                        // sonido cuando "termine de trabajar"
-                        system("pw-play "
-                               "/usr/share/sounds/freedesktop/stereo/"
-                               "complete.oga &");
-                        enviar_notificacion("PomoCli",
-                                            "Tiempo terminado! A descansar,");
+#ifdef __APPLE__
+                        system("afplay /System/Library/Sounds/Glass.aiff &");
+#else
+                        system("pw-play /usr/share/sounds/freedesktop/stereo/complete.oga &");
+#endif
+                        enviar_notificacion("PomoCli", "¡Tiempo terminado! A descansar.");
                     } else {
-                        es_descanso = false;
-                        ciclo_actual++;
-                        segundos_restantes = work_mins * 60;
-                        // sonido de "se acabo el Descanso"
-                        system("pw-play "
-                               "/usr/share/sounds/freedesktop/stereo/"
-                               "complete.oga &");
-                        enviar_notificacion("PomoCli",
-                                            "Tiempo terminado! A descansar,");
+                        *es_descanso = false;
+                        (*ciclo_actual)++;
+                        *segundos_restantes = work_mins * 60;
+                        
+#ifdef __APPLE__
+                        system("afplay /System/Library/Sounds/Glass.aiff &");
+#else
+                        system("pw-play /usr/share/sounds/freedesktop/stereo/complete.oga &");
+#endif
+                        enviar_notificacion("PomoCli", "¡Descanso terminado! A trabajar.");
                     }
                 }
-                // FTXUI que refresque la pantalla
-            } else {
-                this_thread::sleep_for(chrono::milliseconds(100));
+                screen.PostEvent(Event::Custom);
             }
-            screen.PostEvent(Event::Custom);
         }
 
-        Storage::guardar_progreso(work_mins, total_cycles);
+        // Guardar progreso al terminar o salir
+        int ciclos_completados = *ciclo_actual - 1;
+        if (*es_descanso) { 
+            // Si estaba en descanso, el ciclo de trabajo ya se completó
+            ciclos_completados = *ciclo_actual;
+        }
+        Storage::guardar_progreso(work_mins * ciclos_completados, ciclos_completados);
     });
 
     // --- RENDERIZADO (UI) ---
     auto renderer = Renderer([&] {
-        int m = segundos_restantes / 60;
-        int s = segundos_restantes % 60;
-        float ratio = (float)segundos_restantes /
-                      (float)((es_descanso ? rest_mins : work_mins) * 60);
+        int m = *segundos_restantes / 60;
+        int s = *segundos_restantes % 60;
+        float ratio = (float)*segundos_restantes /
+                      (float)((*es_descanso ? rest_mins : work_mins) * 60);
 
         string tiempo = to_string(m) + ":" + (s < 10 ? "0" : "") + to_string(s);
-        string titulo = es_descanso ? " ☕ DESCANSO " : " 💻 TRABAJO ";
-        if (pausado)
+        string titulo = *es_descanso ? " ☕ DESCANSO " : " 💻 TRABAJO ";
+        if (*pausado)
             titulo = " (PAUSADO)";
 
-        auto color_tema = es_descanso ? Color::Green : Color::Red;
+        auto color_tema = *es_descanso ? Color::Green : Color::Red;
 
         return vbox(
             {text(" PomoCli ") | bold | center | border, separator(),
              hbox({
                  text(" Ciclo: ") | dim,
-                 text(to_string(ciclo_actual) + "/" + to_string(total_cycles)) |
+                 text(to_string(*ciclo_actual) + "/" + to_string(total_cycles)) |
                      bold,
              }),
              vbox({
@@ -105,22 +113,20 @@ void iniciar_interfaz_pomodoro(int work_mins, int rest_mins, int total_cycles) {
              text(" [Space] Pausa [S] Skip [Q] Salir ") | dim | center});
     });
 
-    // Captura de eventos para cerrar
+    // Captura de eventos
     auto component = CatchEvent(renderer, [&](Event event) {
         if (event == Event::Character('S') || event == Event::Character('s')) {
-            segundos_restantes = 0; // Forzar cambio de estado
+            *segundos_restantes = 0; 
             return true;
         }
 
         if (event == Event::Character(' ')) {
-            pausado = !pausado; // Toggle pausa
+            *pausado = !*pausado;
             return true;
         }
 
         if (event == Event::Character('q') || event == Event::Character('Q')) {
-            ejecutando = false;
-            if (timer_thread.joinable())
-                timer_thread.detach(); // Evitar bloqueo al salir
+            *ejecutando = false;
             screen.ExitLoopClosure()();
             return true;
         }
@@ -129,6 +135,9 @@ void iniciar_interfaz_pomodoro(int work_mins, int rest_mins, int total_cycles) {
     });
 
     screen.Loop(component);
+    *ejecutando = false;
     if (timer_thread.joinable())
         timer_thread.join();
+
+    std::cout << "\n" << Storage::obtener_resumen() << std::endl;
 }
