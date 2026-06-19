@@ -14,10 +14,10 @@ echo " Detectado: $OS"
 # Verificar dependencias
 
 need() {
-command -v "$1" >/dev/null 2>&1 || {
-echo " Necesitas instalar '$1' antes de continuar."
-exit 1
-}
+	command -v "$1" >/dev/null 2>&1 || {
+		echo " Necesitas instalar '$1' antes de continuar."
+		exit 1
+	}
 }
 
 need curl
@@ -27,9 +27,9 @@ need cmake
 # URL del release (usa releases, no git clone)
 
 if [ "$VERSION" = "latest" ]; then
-URL="https://github.com/$REPO/archive/refs/heads/main.tar.gz"
+	URL="https://github.com/$REPO/archive/refs/heads/main.tar.gz"
 else
-URL="https://github.com/$REPO/archive/refs/tags/$VERSION.tar.gz"
+	URL="https://github.com/$REPO/archive/refs/tags/$VERSION.tar.gz"
 fi
 
 TMP_DIR="$(mktemp -d)"
@@ -52,13 +52,13 @@ echo " Instalando..."
 
 # Detectar si puede escribir sin sudo
 
-PREFIX="/usr/local"
+PREFIX="/usr/local/bin"
 if [ ! -w "$PREFIX" ]; then
-echo " Se requiere sudo para instalar en $PREFIX"
-sudo cmake --install build
+	echo " Se requiere sudo para instalar en $PREFIX"
+	sudo cmake --install build
 else
-cmake --install build
+	cmake --install build
 fi
 
 echo " PomoCli instalado correctamente"
-echo " Ejecuta: pomocli"
+echo " Ejecuta: pomodoro"
