@@ -57,6 +57,6 @@ git clone https://github.com/AriSophDev/PomoCli.git
 - [ ] **Argumentos de Usuario:** Soporte para tiempos personalizados (e.g., `./pomodoro 25 5`).
 
 ### 🔵 Fase 3: Portabilidad & Distribución (Próximamente)
-- [ ] **Soporte Fedora:** Crear un archivo `.spec` o instrucciones para `dnf` y asegurar compatibilidad con `Pipewire`.
+- [x] **Soporte Fedora:** Crear un archivo `.spec` o instrucciones para `dnf` y asegurar compatibilidad con `Pipewire`.
 - [x] **Soporte macOS:** Adaptar las llamadas de sistema de audio a `afplay` (nativo de Mac) y soporte para `brew`.
-- [ ] **Binary Release:** Scripts de instalación automatizada (`install.sh`) para diferentes distros.
+- [x] **Binary Release:** Scripts de instalación automatizada (`install.sh`) para diferentes distros.
